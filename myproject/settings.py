@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
+import sys
+from django.conf import settings
+from django.conf.urls.static import static
 
 from pathlib import Path
 
@@ -55,7 +59,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
-
+AUTH_USER_MODEL = 'myapp.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -77,7 +81,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'firstone',
+        'NAME': 'eight',
         'USER':'root',
         'PASSWORD':'mastersoon',
         'PORT':'3306',
@@ -123,6 +127,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import os
+MEDIA_URL = '/media/'  
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
+urlpatterns = [
+    # ... your URL patterns
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
